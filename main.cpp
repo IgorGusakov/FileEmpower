@@ -64,15 +64,15 @@ int main() {
 
                 for (auto&& x : v)
                 {
-                    std::string_view type_ = "Unknown";
+                    std::string_view type = "Unknown";
                     std::string size = " - ";
 
                     if(fs::status(x).type() == 2) { //file
-                        type_ = "File";
+                        type = "File";
                         size = std::to_string(fs::file_size(x));
                     }
                     else if(fs::status(x).type() == 3) { //folder
-                        type_ = "Folder";
+                        type = "Folder";
                     }
 
                     std::string permissions = std::to_string(fs::status(x).permissions());
@@ -83,7 +83,7 @@ int main() {
 
                     std::string filename = x.filename().string();
 
-                    files.emplace_back(permissions, size, last_access_time, type_,  filename);
+                    files.emplace_back(permissions, size, last_access_time, type,  filename);
                 }
                 // Compute column widths
                 std::size_t perm_width = 0, size_width = 0, time_width = 0, type_width =0, name_width = 0;
