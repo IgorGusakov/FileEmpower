@@ -1,41 +1,28 @@
 #include <iostream>
 #include <vector>
-#include "boost/filesystem.hpp"
+#include <boost/filesystem.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-
-class Color {
-public:
-    enum class Code {
-        FG_RED = 31,
-        FG_GREEN = 32,
-        FG_YELLOW = 33,
-        FG_BLUE = 34,
-        FG_CYAN = 36,
-        FG_DEFAULT = 39,
-        BG_RED = 41,
-        BG_GREEN = 42,
-        BG_YELLOW = 43,
-        BG_BLUE = 44,
-        BG_DEFAULT = 49
-    };
-
-    static std::string code(Code color) {
-        return "\033[" + std::to_string(static_cast<int>(color)) + "m";
-    }
-
-    static std::string reset() {
-        return code(Code::FG_DEFAULT);
-    }
-};
+#include "Color.h"
+#include "Logger.h"
 
 
+
+using namespace file_empower;
 
 int main() {
+
     namespace fs = boost::filesystem;
     namespace pt = boost::posix_time;
 
-    fs::path p(fs::current_path());  // avoid repeated path construction below
+    std::string_view ident_file = "main.cpp";
+    Logger logger;
 
+//    logger.Log(ident_file, LogLevel::kDebug, "Debug message");
+//    logger.Log(ident_file,LogLevel::kInfo, "Informational message");
+//    logger.Log(ident_file,LogLevel::kWarning, "Warning message");
+//    logger.Log(ident_file,LogLevel::kError, "Error message");
+
+    fs::path p(fs::current_path());  // avoid repeated path construction below
 
     struct Object {
         std::tuple<std::string, Color::Code> Folder {"Folder" , Color::Code::BG_GREEN};
@@ -53,12 +40,15 @@ int main() {
 
             else if (fs::is_directory(p))
             {
-                std::cout << p << " is a directory containing:\n";
+                logger.Log(ident_file,LogLevel::kInfo, "is a directory containing: " + p.string());
+//                std::cout << p << " is a directory containing:\n";
 
                 std::vector<fs::path> v;
 
-                for (auto&& x : fs::directory_iterator(p))
+                for (auto&& x : fs::directory_iterator(p)) {
                     v.push_back(x.path());
+                }
+
 
                 std::sort(v.begin(), v.end());
 
