@@ -12,7 +12,7 @@ add_executable(FileEmpower
         main.cpp
         Data.h
         Color.h
-        OutputFE.cpp
-        OutputFE.h
-        Logger.h)
+        OutputConsoleFE.cpp
+        OutputConsoleFE.h
+        Logger.h FileSystem.cpp FileSystem.h)
 target_link_libraries(FileEmpower ${Boost_LIBRARIES})
