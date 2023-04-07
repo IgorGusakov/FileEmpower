@@ -16,10 +16,10 @@ int main() {
     std::string_view ident_file = "main.cpp";
     Logger logger;
     logger.Log(ident_file,LogLevel::kDebug, "Started File Manager <FileEmpower>");
-
     FileSystem fs_file_empower(boost::filesystem::current_path().string());
-    auto files_fm = std::move(fs_file_empower.get_data_filesystem());
 
+//    std::size_t perm_width = 0, size_width = 0, time_width = 0, type_width =0, name_width = 0;
+    auto files_fm = std::move(fs_file_empower.get_data_filesystem());
     OutputConsoleFE out_console(files_fm);
     out_console.draw_data_console();
 

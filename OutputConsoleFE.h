@@ -5,7 +5,6 @@
 #ifndef FILEEMPOWER_OUTPUTCONSOLEFE_H
 #define FILEEMPOWER_OUTPUTCONSOLEFE_H
 #include "Data.h"
-#include "Logger.h"
 
 namespace file_empower {
 
@@ -26,8 +25,6 @@ namespace file_empower {
         };
         WidthData data_width;
         void calc_max_width();
-        std::string_view ident_file = "OutputConsoleFE.cpp";
-        Logger logger;
     };
 
 } // file_empower
