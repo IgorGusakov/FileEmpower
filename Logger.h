@@ -22,7 +22,7 @@ namespace file_empower {
         template<typename T>
         requires std::convertible_to<T, std::string_view>
         void Log(std::string_view identify, LogLevel level, T message) {
-            output_stream << "[" << Color::code(Color::Code::FG_GREEN) << identify << Color::reset() << "]" "[" << Timestamp() << "] ";
+            output_stream << "[" << Color::code(Color::Code::FG_GREEN) << identify << Color::reset_fg() << "]" "[" << Timestamp() << "] ";
             switch (level) {
                 case LogLevel::kDebug:
                     output_stream << "[DEBUG]   ";
@@ -52,7 +52,6 @@ namespace file_empower {
             return timestamp;
         }
     };
-
 }// namespace file_empower
 
 #endif//FILEEMPOWER_LOGGER_H

@@ -11,6 +11,6 @@ namespace file_empower {
 
     };
 
-} // file_emppower
+} // file_empower
 
 #endif //FILEEMPOWER_OUTPUTFE_H

@@ -4,7 +4,7 @@
 
 #include "OutputFE.h"
 
-namespace file_emppower {
+namespace file_empower {
 
 
-} // file_emppower
+} // file_empower

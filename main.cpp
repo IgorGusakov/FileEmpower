@@ -4,7 +4,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "Color.h"
 #include "Logger.h"
-
+#include "Data.h"
 
 
 using namespace file_empower;
@@ -22,15 +22,13 @@ int main() {
 //    logger.Log(ident_file,LogLevel::kWarning, "Warning message");
 //    logger.Log(ident_file,LogLevel::kError, "Error message");
 
-    fs::path p(fs::current_path());  // avoid repeated path construction below
+    Data data_fm;
+    data_fm.set_path(fs::current_path().string());
 
-    struct Object {
-        std::tuple<std::string, Color::Code> Folder {"Folder" , Color::Code::BG_GREEN};
-        std::tuple<std::string, Color::Code> File {"File" , Color::Code::BG_YELLOW};
-        std::tuple<std::string, Color::Code> Unknown {"Unknown" , Color::Code::BG_RED};
-    };
+    fs::path p(data_fm.get_path());  // avoid repeated path construction below
 
-    std::vector<std::tuple<std::string, std::string, std::string, std::string, std::string>> files;
+    std::vector<Data> files_fm;
+
     try
     {
         if (fs::exists(p))
@@ -41,7 +39,6 @@ int main() {
             else if (fs::is_directory(p))
             {
                 logger.Log(ident_file,LogLevel::kInfo, "is a directory containing: " + p.string());
-//                std::cout << p << " is a directory containing:\n";
 
                 std::vector<fs::path> v;
 
@@ -54,44 +51,37 @@ int main() {
 
                 for (auto&& x : v)
                 {
-                    std::string_view type = "Unknown";
-                    std::string size = " - ";
-
                     if(fs::status(x).type() == 2) { //file
-                        type = "File";
-                        size = std::to_string(fs::file_size(x));
+                        data_fm.set_type("File", Color::Code::BG_GREEN);
+                        data_fm.set_size(fs::file_size(x));
                     }
-                    else if(fs::status(x).type() == 3) { //folder
-                        type = "Folder";
-                    }
+                    else if(fs::status(x).type() == 3) //folder
+                        data_fm.set_type("Folder", Color::Code::BG_YELLOW);
 
-                    std::string permissions = std::to_string(fs::status(x).permissions());
+                    data_fm.set_permissions(fs::status(x).permissions());
 
-                    auto time_t = fs::last_write_time(x);
-                    auto utc_t  = boost::posix_time::from_time_t(time_t);
-                    std::string last_access_time = to_simple_string(utc_t);
+                    data_fm.set_time(fs::last_write_time(x));
 
-                    std::string filename = x.filename().string();
-
-                    files.emplace_back(permissions, size, last_access_time, type,  filename);
+                    data_fm.set_name(x.filename().string());
+                    files_fm.emplace_back(data_fm);
                 }
-                // Compute column widths
+
                 std::size_t perm_width = 0, size_width = 0, time_width = 0, type_width =0, name_width = 0;
-                for (const auto& [perm, size, time, type, name] : files) {
-                    perm_width = std::max(perm_width, perm.length());
-                    size_width = std::max(size_width, size.length());
-                    time_width = std::max(time_width, time.length());
-                    type_width = std::max(type_width, type.length());
-                    name_width = std::max(name_width, name.length());
-                }
 
+                for (const auto& data_fm_ : files_fm) {
+                    perm_width = std::max(perm_width, data_fm_.get_permissions_len());
+                    size_width = std::max(size_width, data_fm_.get_size_len());
+                    time_width = std::max(time_width, data_fm_.get_time_len());
+                    type_width = std::max(type_width, data_fm_.get_type_len());
+                    name_width = std::max(name_width, data_fm_.get_name_len());
+                }
                 // Output files with column alignment
-                for (const auto& [perm, size, time, type, name] : files) {
-                    std::cout <<  Color::code(Color::Code::FG_BLUE) << std::left << std::setw(perm_width) << perm << Color::reset() << " | ";
-                    std::cout <<  Color::code(Color::Code::FG_CYAN) << std::right << std::setw(size_width) << size << Color::reset() <<  " | ";
-                    std::cout << std::left << std::setw(time_width) << time << " | ";
-                    std::cout << std::left << std::setw(type_width) << type << " | ";
-                    std::cout <<  Color::code(Color::Code::FG_YELLOW) << std::left << std::setw(name_width) << name << Color::reset() << std::endl;
+                for (Data data_fm_ : files_fm) {
+                    std::cout <<  Color::code(Color::Code::FG_BLUE) << std::left << std::setw(perm_width) << data_fm_.get_permissions() << Color::reset_fg() << " | ";
+                    std::cout <<  Color::code(Color::Code::FG_CYAN) << std::right << std::setw(size_width) << data_fm_.get_size() << Color::reset_fg() <<  " | ";
+                    std::cout << std::left << std::setw(time_width) << data_fm_.get_time() << " | ";
+                    std::cout << Color::code(std::get<1>(data_fm_.get_type())) << std::left << std::setw(type_width) << std::get<0>(data_fm_.get_type()) << Color::reset_bg() << " | ";
+                    std::cout <<  Color::code(Color::Code::FG_YELLOW) << std::left << std::setw(name_width) << data_fm_.get_name() << Color::reset_fg() << std::endl;
                 }
             }
             else

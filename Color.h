@@ -27,8 +27,12 @@ namespace file_empower {
             return "\033[" + std::to_string(static_cast<int>(color)) + "m";
         }
 
-        static std::string reset() {
+        static std::string reset_fg() {
             return code(Code::FG_DEFAULT);
+        }
+
+        static std::string reset_bg() {
+            return code(Code::BG_DEFAULT);
         }
     };
 }
