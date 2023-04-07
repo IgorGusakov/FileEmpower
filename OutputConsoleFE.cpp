@@ -11,15 +11,21 @@ namespace file_empower {
         for (const auto& data_fm_ : files_fm)
         {
             data_width.perm_width = std::max(data_width.perm_width, data_fm_.get_permissions_len());
-            data_width.perm_width = std::max(data_width.size_width, data_fm_.get_size_len());
+            data_width.size_width = std::max(data_width.size_width, data_fm_.get_size_len());
             data_width.time_width = std::max(data_width.time_width, data_fm_.get_time_len());
             data_width.type_width = std::max(data_width.type_width, data_fm_.get_type_len());
             data_width.name_width = std::max(data_width.name_width, data_fm_.get_name_len());
         }
+        logger.Log(ident_file,LogLevel::kDebug, "perm_width = " + std::to_string(data_width.perm_width));
+        logger.Log(ident_file,LogLevel::kDebug, "size_width = " + std::to_string(data_width.size_width));
+        logger.Log(ident_file,LogLevel::kDebug, "time_width = " + std::to_string(data_width.time_width));
+        logger.Log(ident_file,LogLevel::kDebug, "type_width = " + std::to_string(data_width.type_width));
+        logger.Log(ident_file,LogLevel::kDebug, "name_width = " + std::to_string(data_width.name_width));
     }
 
      void OutputConsoleFE::draw_data_console()
     {
+        calc_max_width();
         for (Data data_fm_ : files_fm) {
             std::cout <<  Color::code(Color::Code::FG_BLUE) << std::left << std::setw(static_cast<int>(data_width.perm_width)) << data_fm_.get_permissions() << Color::reset_fg() << " | ";
             std::cout <<  Color::code(Color::Code::FG_CYAN) << std::right << std::setw(static_cast<int>(data_width.size_width)) << data_fm_.get_size() << Color::reset_fg() <<  " | ";
