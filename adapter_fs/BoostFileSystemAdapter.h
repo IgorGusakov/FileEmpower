@@ -4,6 +4,8 @@
 
 #ifndef FILEEMPOWER_BOOSTFILESYSTEMADAPTER_H
 #define FILEEMPOWER_BOOSTFILESYSTEMADAPTER_H
+
+#ifdef BOOST_LIB
 #include <boost/filesystem.hpp>
 #include "FileSystemInterface.h"
 #include <sstream>
@@ -22,6 +24,10 @@ namespace file_empower {
 
         bool is_regular_file(const std::string& path) override {
             return bfs::is_regular_file(path);
+        }
+
+        bool is_empty(const std::string& path) override {
+            return bfs::is_empty(path);
         }
 
         std::vector<std::string> directory_iter(const std::string& path) override {
@@ -66,5 +72,5 @@ namespace file_empower {
     };
 
 }// namespace file_empower
-
+#endif
 #endif//FILEEMPOWER_BOOSTFILESYSTEMADAPTER_H

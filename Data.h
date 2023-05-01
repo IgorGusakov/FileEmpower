@@ -6,7 +6,6 @@
 #define FILEEMPOWER_DATA_H
 
 #include <string>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include "Color.h"
 
 namespace file_empower {

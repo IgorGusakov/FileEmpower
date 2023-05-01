@@ -3,6 +3,7 @@
 //
 
 #include "OutputConsoleFE.h"
+#include <iomanip>
 
 namespace file_empower {
 

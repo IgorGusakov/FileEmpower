@@ -25,6 +25,10 @@ namespace file_empower {
             return sfs::is_regular_file(path);
         }
 
+        bool is_empty(const std::string& path) override {
+            return sfs::is_empty(path);
+        }
+
         std::vector<std::string> directory_iter(const std::string& path) override {
             std::vector<std::string> v;
 

@@ -14,6 +14,7 @@ namespace file_empower {
         virtual bool exists(const std::string& path) = 0;
         virtual bool is_regular_file(const std::string& path) = 0;
         virtual bool is_directory(const std::string& path) = 0;
+        virtual bool is_empty(const std::string& path) = 0;
         virtual std::vector<std::string> directory_iter(const std::string& path) = 0;
         virtual const std::string permissions(const std::string& path) = 0;
         virtual uint64_t last_write_time(const std::string& path) = 0;
