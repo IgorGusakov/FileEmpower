@@ -43,6 +43,9 @@ namespace file_empower {
                         files_fm.emplace_back(data_fm);
                     }
                 }
+                else if (mfs->is_empty(path)) {
+                    logger.Log(ident_file,LogLevel::kInfo, path + " is empty");
+                }
                 else
                     logger.Log(ident_file,LogLevel::kWarning, path + " exists, but is not a regular file or directory");
             }

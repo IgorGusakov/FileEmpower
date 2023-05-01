@@ -1,5 +1,4 @@
 #include <iostream>
-#include <boost/filesystem.hpp>
 #include "Color.h"
 #include "Logger.h"
 #include "FileSystem.h"
@@ -15,7 +14,7 @@ int main() {
     Logger logger;
     logger.Log(ident_file,LogLevel::kDebug, "Started File Manager <FileEmpower>");
 
-    auto current_path = boost::filesystem::current_path().string();
+    std::string current_path = getenv("HOME");
 
     auto logic_fm = [] (const std::string& path)
     {
@@ -62,11 +61,9 @@ int main() {
           std::cout << "Moving backward..." << std::endl;
           std::cout << "num_of_symbol: " << num_of_symbol << std::endl;
 
-//          auto sym = path.find_last_of('/');
-
-//          ///fixme: fix to root
+          ///fixme: fix to root
           if (!num_of_symbol)
-              new_path = bfs::path(path).root_path().string(); ///todo:boost::filesystem::last_write_time: No such file or directory
+              new_path = '/';
           else
               new_path = path.substr(0, ++num_of_symbol);
 
