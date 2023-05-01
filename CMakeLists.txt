@@ -14,5 +14,8 @@ add_executable(FileEmpower
         Color.h
         OutputConsoleFE.cpp
         OutputConsoleFE.h
-        Logger.h FileSystem.cpp FileSystem.h)
+        Logger.h FileSystem.cpp FileSystem.h
+        adapter_fs/FileSystemInterface.h
+        adapter_fs/BoostFileSystemAdapter.h
+        adapter_fs/StdFileSystemAdapter.h)
 target_link_libraries(FileEmpower ${Boost_LIBRARIES})
