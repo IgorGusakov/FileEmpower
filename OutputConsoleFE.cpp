@@ -16,11 +16,11 @@ namespace file_empower {
             data_width.type_width = std::max(data_width.type_width, data_fm_.get_type_len());
             data_width.name_width = std::max(data_width.name_width, data_fm_.get_name_len());
         }
-        logger.Log(ident_file,LogLevel::kDebug, "perm_width = " + std::to_string(data_width.perm_width));
-        logger.Log(ident_file,LogLevel::kDebug, "size_width = " + std::to_string(data_width.size_width));
-        logger.Log(ident_file,LogLevel::kDebug, "time_width = " + std::to_string(data_width.time_width));
-        logger.Log(ident_file,LogLevel::kDebug, "type_width = " + std::to_string(data_width.type_width));
-        logger.Log(ident_file,LogLevel::kDebug, "name_width = " + std::to_string(data_width.name_width));
+//        logger.Log(ident_file,LogLevel::kDebug, "perm_width = " + std::to_string(data_width.perm_width));
+//        logger.Log(ident_file,LogLevel::kDebug, "size_width = " + std::to_string(data_width.size_width));
+//        logger.Log(ident_file,LogLevel::kDebug, "time_width = " + std::to_string(data_width.time_width));
+//        logger.Log(ident_file,LogLevel::kDebug, "type_width = " + std::to_string(data_width.type_width));
+//        logger.Log(ident_file,LogLevel::kDebug, "name_width = " + std::to_string(data_width.name_width));
     }
 
      void OutputConsoleFE::draw_data_console()
