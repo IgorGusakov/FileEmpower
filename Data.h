@@ -6,7 +6,6 @@
 #define FILEEMPOWER_DATA_H
 
 #include <string>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include "Color.h"
 
 namespace file_empower {
@@ -26,23 +25,23 @@ namespace file_empower {
         [[nodiscard]] uint64_t get_size( ) const { return size;};
         [[nodiscard]] size_t get_size_len( ) const { return std::to_string(size).length();};
         //time
-        void set_time(const time_t& time_) { time = time_;};
-        [[nodiscard]] std::string get_time( ) const { return to_simple_string(boost::posix_time::from_time_t(time));};
-        [[nodiscard]] size_t get_time_len( ) const { return to_simple_string(boost::posix_time::from_time_t(time)).length();};
+        void set_time(const uint64_t time_) { time = time_;};
+        [[nodiscard]] std::string get_time( ) const { return std::to_string(time);};
+        [[nodiscard]] size_t get_time_len( ) const { return std::to_string(time).length();};
         //permissions
-        void set_permissions(int perm) { permissions = perm;};
-        [[nodiscard]] int get_permissions( ) const { return permissions;};
-        [[nodiscard]] size_t get_permissions_len( ) const { return std::to_string(permissions).length();};
+        void set_permissions(std::string_view perm) { permissions = perm;};
+        [[nodiscard]] const std::string& get_permissions( ) const { return permissions;};
+        [[nodiscard]] size_t get_permissions_len( ) const { return permissions.length();};
         //name file or folder
-        void set_name(const std::string &name) { name_object = name;};
+        void set_name(std::string_view name) { name_object = name;};
         const std::string& get_name( ) { return name_object;};
         [[nodiscard]] size_t get_name_len( ) const { return name_object.length();};
     private:
         std::string path {"."};
         std::tuple<std::string, Color::Code> type = {"Unknown", Color::Code::BG_RED};
         uint64_t size{0};
-        time_t time{0};
-        int permissions{0};
+        uint64_t time{0};
+        std::string permissions{"---------"};
         std::string name_object {"-"};
     };
 }
