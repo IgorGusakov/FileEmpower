@@ -1,9 +1,9 @@
-#include <iostream>
 #include "Color.h"
-#include "Logger.h"
 #include "FileSystem.h"
-#include "OutputConsoleFE.h"
+#include "Logger.h"
+#include "output_viewer/OutputConsoleFE.h"
 #include <algorithm>
+#include <iostream>
 
 
 using namespace file_empower;
@@ -16,16 +16,16 @@ int main() {
 
     std::string current_path = getenv("HOME");
 
-    auto logic_fm = [] (const std::string& path)
+    auto show_path_fm = [] (const std::string& path)
     {
       FileSystem fs_file_empower(path);
       auto files_fm = std::move(fs_file_empower.get_data_filesystem());
 
-      OutputConsoleFE out_console(files_fm);
-      out_console.draw_data_console();
+      std::unique_ptr<OutputConsoleFE> show_ptr = std::make_unique<OutputConsoleFE>(files_fm);
+      show_ptr.get()->draw_data();
     };
 
-    logic_fm(current_path);
+    show_path_fm(current_path);
 
     auto command_handler = [&] (const std::string& cmd, const std::string& path)
     {
@@ -68,7 +68,7 @@ int main() {
               new_path = path.substr(0, ++num_of_symbol);
 
           std::cout << "new path :" << new_path << std::endl;
-          logic_fm(new_path);
+          show_path_fm(new_path);
 
       } else if (cmd.find("go",0,2) != std::string::npos) {
           if(cmd.substr(2).size()) {
@@ -80,7 +80,7 @@ int main() {
                   new_path = path + '/' + cmd.substr(3);
               }
               std::cout << "go to folder " << new_path << std::endl;
-              logic_fm( new_path );
+              show_path_fm( new_path );
           }
           else {
               std::cout << "path not specified " <<std::endl;

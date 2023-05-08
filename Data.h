@@ -17,9 +17,9 @@ namespace file_empower {
         const std::string& get_path( ) { return path;};
         [[nodiscard]] size_t get_path_len( ) const { return path.length();};
         //type
-        void set_type(const std::string &id, const Color::Code& color) { std::get<0>(type) = id; std::get<1>(type) = color;};
-        std::tuple<std::string, Color::Code> get_type() {return type;};
-        [[nodiscard]] size_t get_type_len( ) const { return std::get<0>(type).length();};
+        void set_type(const std::string &id, const Color::Code& color) { std::get<0>(type_f) = id; std::get<1>(type_f) = color;};
+        std::tuple<std::string, Color::Code> get_type() {return type_f;};
+        [[nodiscard]] size_t get_type_len( ) const { return std::get<0>(type_f).length();};
         //size
         void set_size(uint64_t size_) { size = size_;};
         [[nodiscard]] uint64_t get_size( ) const { return size;};
@@ -38,7 +38,8 @@ namespace file_empower {
         [[nodiscard]] size_t get_name_len( ) const { return name_object.length();};
     private:
         std::string path {"."};
-        std::tuple<std::string, Color::Code> type = {"Unknown", Color::Code::BG_RED};
+        std::tuple<std::string, file_empower::Color::Code> type_f;// = {std::to_string("Unknown"), Color::Code::BG_RED};
+        std::tuple<char, long unsigned int> type_f2;
         uint64_t size{0};
         uint64_t time{0};
         std::string permissions{"---------"};

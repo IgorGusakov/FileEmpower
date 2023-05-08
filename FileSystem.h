@@ -6,6 +6,7 @@
 #define FILEEMPOWER_FILESYSTEM_H
 
 #include <string>
+#include <vector>
 #include "Data.h"
 #include "Logger.h"
 #include "adapter_fs/FileSystemInterface.h"

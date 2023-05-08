@@ -6,6 +6,7 @@
 #define FILEEMPOWER_FILESYSTEMINTERFACE_H
 
 #include <string>
+#include <vector>
 
 namespace file_empower {
 
