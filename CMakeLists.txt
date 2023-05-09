@@ -3,8 +3,6 @@ project(FileEmpower)
 message(STATUS "Current OS: ${CMAKE_SYSTEM_NAME}")
 option(BOOST_LIB "Builds app with boost::filesystem, we can use that when use c++11." OFF)
 
-set(CMAKE_C_COMPILER "/usr/bin/clang")
-set(CMAKE_CPP_COMPILER "/usr/bin/clang++")
 set(CMAKE_CXX_STANDARD 20)
 
 if (BOOST_LIB)
@@ -29,7 +27,12 @@ add_executable(FileEmpower
         FileSystem.h
         adapter_fs/FileSystemInterface.h
         adapter_fs/BoostFileSystemAdapter.h
-        adapter_fs/StdFileSystemAdapter.h output_viewer/OutputCRTPViewer.h)
+        adapter_fs/StdFileSystemAdapter.h
+        output_viewer/OutputCRTPViewer.h
+        logic_fe/CommandHandler.cpp
+        logic_fe/CommandHandler.h
+        logic_fe/LogicFE.cpp
+        logic_fe/LogicFE.h)
 
 if (BOOST_LIB)
     target_link_libraries(FileEmpower ${Boost_LIBRARIES})

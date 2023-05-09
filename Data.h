@@ -6,6 +6,7 @@
 #define FILEEMPOWER_DATA_H
 
 #include <string>
+#include <cstdint>
 #include "Color.h"
 
 namespace file_empower {
