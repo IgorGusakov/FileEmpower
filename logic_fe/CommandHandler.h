@@ -12,8 +12,8 @@ namespace file_empower {
 
     enum class commands {
         NONE,
-        GO,
-        BACK,
+        FORWARD,
+        BACKWARD,
         CREATE,
         CRYPT,
         ENCRYPT,
@@ -27,6 +27,7 @@ namespace file_empower {
         uint8_t count_back_step ( const std::string& data );
     private:
         std::string substr;
+        char SYMBOL_BACKWARD = '.';
     };
 
 }// namespace file_empower

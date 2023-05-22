@@ -8,15 +8,15 @@ namespace file_empower {
 
     commands CommandHandler::get_command(const std::string &input)
     {
-        if (input.find("back",0,4) != std::string::npos) {
+        if (input.find("go .",0,4) != std::string::npos) {
             substr.clear();
-            substr = input.substr(4);
-            return commands::BACK;
+            substr = input.substr(3);
+            return commands::BACKWARD;
         }
         else if (input.find("go",0,2) != std::string::npos) {
             substr.clear();
             substr = input.substr(2);
-            return commands::GO;
+            return commands::FORWARD;
         }
         else if (input == "exit") {
             return commands::EXIT;
@@ -27,8 +27,8 @@ namespace file_empower {
 
     uint8_t CommandHandler::count_back_step ( const std::string& data )
     {
-        if( data.find('.') != std::string::npos )
-            return std::count(data.begin(), data.end(),'.');
+        if( data.find(SYMBOL_BACKWARD) != std::string::npos )
+            return std::count(data.begin(), data.end(),SYMBOL_BACKWARD);
         else
             return 0;
     }

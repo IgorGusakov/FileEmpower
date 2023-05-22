@@ -3,12 +3,13 @@
 //
 
 #include "LogicFE.h"
+#include <sstream>
 
 namespace file_empower {
 
     void LogicFE::run_logic( )
     {
-        std::cout << "Enter a command (back/exit/go): ";
+        std::cout << "Enter a command (go \\(backward)/exit/go path(forward)): ";
         while ((getline(std::cin, input_str_data ))) {
             logger.Log(ident_file,LogLevel::kDebug, input_str_data);
 
@@ -18,16 +19,33 @@ namespace file_empower {
                     exit(0);
                     break ;
 
-                case commands::BACK:
+                case commands::BACKWARD:
                 {
-                    auto new_num_of_symbol = path_cur.find_last_of('/');
-                    auto count_s = command.count_back_step(path_cur);
-                    if(new_num_of_symbol > count_s) {
-                        auto num_of_symbol = path_cur.size();
-                        for(size_t i = 0; i < count_s; i++) {
-                            num_of_symbol = path_cur.find_last_of('/', num_of_symbol);
-                        }
-                        path_cur = path_cur.substr(0, ++num_of_symbol);
+                    auto arr_of_symbol = [&](std:: vector<uint16_t> &vec)  {
+                      uint64_t lastIndex = path_cur.size( );
+                      while ( lastIndex != std::string::npos && lastIndex != 0) {
+                          uint16_t prevIndex = lastIndex;
+                          lastIndex = path_cur.find_last_of('/', prevIndex - 1);
+                          if (lastIndex != std::string::npos) {
+                              vec.emplace_back(static_cast<uint16_t>(lastIndex));
+                          }
+                      }
+                    };
+
+                    std::vector<uint16_t> points_symbol_vec;
+                    arr_of_symbol(points_symbol_vec);
+//                    for(uint16_t n : points_symbol_vec) {
+//                        logger.Log(ident_file,LogLevel::kDebug, "n " + std::to_string(n));
+//                    }
+                    auto count_s = command.count_back_step(input_str_data);
+//                    logger.Log(ident_file,LogLevel::kDebug, path_cur);
+//                    logger.Log(ident_file,LogLevel::kDebug, "all symbol / " + std::to_string(points_symbol_vec.size()));
+//                    logger.Log(ident_file,LogLevel::kDebug, "back count" + std::to_string(count_s));
+
+                    if(points_symbol_vec.size() > count_s) {
+                        auto num_of_symbol = points_symbol_vec[ count_s - 1 ];
+//                        logger.Log(ident_file,LogLevel::kDebug, "num_of_symbol" + std::to_string(num_of_symbol));
+                        path_cur = path_cur.substr(0, num_of_symbol);
                     }
                     else
                         path_cur = "/";
@@ -35,8 +53,15 @@ namespace file_empower {
                     show_path_data(path_cur);
                     break;
                 }
-                case commands::GO:
-
+                case commands::FORWARD:
+                    if(input_str_data[3] == '/') { //new path
+                        path_cur = input_str_data.substr(3);
+                    }
+                    else { //continue path
+                        path_cur = path_cur + '/' + input_str_data.substr(3);
+                    }
+                    std::cout << "go to folder " << path_cur << std::endl;
+                    show_path_data( path_cur );
                     break ;
 
             }

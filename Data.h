@@ -19,7 +19,7 @@ namespace file_empower {
         [[nodiscard]] size_t get_path_len( ) const { return path.length();};
         //type
         void set_type(const std::string &id, const Color::Code& color) { std::get<0>(type_f) = id; std::get<1>(type_f) = color;};
-        std::tuple<std::string, Color::Code> get_type() {return type_f;};
+        std::tuple<std::string, Color::Code> get_type() const {return type_f;};
         [[nodiscard]] size_t get_type_len( ) const { return std::get<0>(type_f).length();};
         //size
         void set_size(uint64_t size_) { size = size_;};
@@ -35,7 +35,7 @@ namespace file_empower {
         [[nodiscard]] size_t get_permissions_len( ) const { return permissions.length();};
         //name file or folder
         void set_name(std::string_view name) { name_object = name;};
-        const std::string& get_name( ) { return name_object;};
+        const std::string& get_name( ) const { return name_object;};
         [[nodiscard]] size_t get_name_len( ) const { return name_object.length();};
     private:
         std::string path {"."};
