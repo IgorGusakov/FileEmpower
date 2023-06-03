@@ -1,5 +1,5 @@
 //
-// Created by Igor Gusakov on 02.04.2023.
+// Created by Igor Gusakov
 //
 
 #ifndef FILEEMPOWER_OUTPUTCONSOLEFE_H

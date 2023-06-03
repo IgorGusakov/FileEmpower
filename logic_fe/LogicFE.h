@@ -1,5 +1,5 @@
 //
-// Created by Igor Gusakov on 08.05.2023.
+// Created by Igor Gusakov
 //
 
 #ifndef FILEEMPOWER_LOGICFE_H
@@ -7,22 +7,24 @@
 #include "../output_viewer/OutputConsoleFE.h"
 #include "../FileSystem.h"
 #include "CommandHandler.h"
+#include <experimental/propagate_const>
+#include <sstream>
 
 namespace file_empower {
 
-    class LogicFE {
+    class LogicFE
+    {
+        class impl;
+        std::experimental::propagate_const<std::unique_ptr<impl>> pImpl;
     public:
-        explicit LogicFE( const std::string& path ) : path_cur(path) {
-            show_path_data(path_cur);
-        };
-        void run_logic( );
-        void show_path_data( const std::string& path );
-    private:
-        std::string input_str_data = {};
-        Logger logger;
-        std::string_view ident_file = "LogicFE.cpp";
-        CommandHandler command;
-        std::string path_cur;
+        LogicFE() = delete;
+        explicit LogicFE( const std::string& path );
+        ~LogicFE();
+        LogicFE(LogicFE&&);
+        LogicFE(const LogicFE&) = delete;
+        LogicFE& operator=(LogicFE&&);
+        LogicFE& operator=(const LogicFE&) = delete;
+        void start_logic_fe( );
     };
 
 }// namespace file_empower

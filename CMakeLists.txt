@@ -5,6 +5,17 @@ option(BOOST_LIB "Builds app with boost::filesystem, we can use that when use c+
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(CXXFLAGS
+        "-Werror \
+        -Wunused-function \
+        -Wunused-label \
+        -Wunused-value \
+        -Wunused-variable \
+        -Wunused-parameter \
+        -Wunused-but-set-parameter")
+set(CMAKE_CXX_FLAGS "${CXXFLAGS}")
+
+
 if (BOOST_LIB)
     message("Turned on BOOST LIB")
     add_definitions(-DBOOST_LIB)
@@ -31,8 +42,9 @@ add_executable(FileEmpower
         output_viewer/OutputCRTPViewer.h
         logic_fe/CommandHandler.cpp
         logic_fe/CommandHandler.h
-        logic_fe/LogicFE.cpp
-        logic_fe/LogicFE.h)
+        logic_fe/LogicFE.h
+        logic_fe/LogicFEImpl.cpp
+        logic_fe/LogicFEImpl.h)
 
 if (BOOST_LIB)
     target_link_libraries(FileEmpower ${Boost_LIBRARIES})

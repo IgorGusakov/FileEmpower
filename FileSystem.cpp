@@ -1,15 +1,16 @@
 //
-// Created by Igor Gusakov on 07.04.2023.
+// Created by Igor Gusakov
 //
 
 #include "FileSystem.h"
 
 namespace file_empower {
-
-    std::vector<Data> FileSystem::get_data_filesystem() {
+    std::optional<std::vector<Data>>
+    FileSystem::get_data_filesystem( )
+    {
         try
         {
-            if (mfs->exists(path))
+            if ( mfs->exists( path ) )
             {
                 if (mfs->is_regular_file(path)) {
                     logger.Log(ident_file,LogLevel::kInfo, "size is: " + std::to_string(mfs->file_size(path)));
@@ -59,7 +60,11 @@ namespace file_empower {
         {
             logger.Log(ident_file,LogLevel::kError, ex.what());
         }
-        return {};
+        return std::nullopt;
     }
 
+    bool FileSystem::is_valid_path( ) const
+    {
+        return mfs->exists( path );
+    }
 }// namespace file_empower

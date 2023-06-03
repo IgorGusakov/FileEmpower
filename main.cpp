@@ -12,6 +12,6 @@ int main() {
     std::string current_path = getenv("HOME");
     file_empower::LogicFE logic(current_path);
 
-    logic.run_logic();
+    logic.start_logic_fe();
     return 0;
 }

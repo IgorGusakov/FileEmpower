@@ -1,5 +1,5 @@
 //
-// Created by Igor Gusakov on 08.05.2023.
+// Created by Igor Gusakov
 //
 
 #include "CommandHandler.h"

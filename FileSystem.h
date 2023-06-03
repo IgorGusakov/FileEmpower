@@ -1,5 +1,5 @@
 //
-// Created by Igor Gusakov on 07.04.2023.
+// Created by Igor Gusakov
 //
 
 #ifndef FILEEMPOWER_FILESYSTEM_H
@@ -16,18 +16,24 @@
 namespace file_empower {
     class FileSystem {
     public:
-        explicit FileSystem( const std::string& path_in ) : path( path_in )
+        explicit FileSystem( auto&& path_in ) : path( path_in )
         {
+
 #ifdef BOOST_LIB
                 mfs = std::make_unique<BoostFileSystemAdapter>();
-                logger.Log(ident_file,LogLevel::kInfo, "We are using boost::filesystems");
+                logger.Log(ident_file,LogLevel::kInfo, "We are using boost::filesystems string");
 #else
                 mfs = std::make_unique<StdFileSystemAdapter>();
-                logger.Log(ident_file,LogLevel::kInfo, "We are using std::filesystems");
+                logger.Log(ident_file,LogLevel::kInfo, "We are using std::filesystems string");
 #endif
             data_fm.set_path(path_in);
         };
-        std::vector<Data> get_data_filesystem();
+
+        FileSystem( FileSystem&& ) = default;
+        FileSystem(const FileSystem&) = delete;
+
+        std::optional<std::vector<Data>> get_data_filesystem();
+        bool is_valid_path() const;
 
     private:
         std::unique_ptr<FileSystemInterface> mfs;

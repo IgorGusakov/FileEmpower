@@ -1,5 +1,5 @@
 //
-// Created by Igor Gusakov on 26.04.2023.
+// Created by Igor Gusakov
 //
 
 #ifndef FILEEMPOWER_FILESYSTEMINTERFACE_H
