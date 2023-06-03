@@ -12,6 +12,7 @@
 #include "adapter_fs/FileSystemInterface.h"
 #include "adapter_fs/BoostFileSystemAdapter.h"
 #include "adapter_fs/StdFileSystemAdapter.h"
+#include <optional>
 
 namespace file_empower {
     class FileSystem {
